@@ -1,67 +1,130 @@
-# GU iCloud to Google Calendar Automation
+var sheet = SpreadsheetApp.openById("");
+var data =sheet.getDataRange().getValues();
+data = data[data.length-1]
+// Calendar to output requests
+var calendar = CalendarApp.getCalendarById("");
 
-Show iCloud calendar classes in Google Calendar
+function csvToArray(csv) {
+  rows = csv.split("\n");
 
-## Table of Contents
+  return rows.map(function (row) {
+    return row.split(",");
+  });
+};
+// # index 0 = name
+// # index 1 = date
+// # index 2 = start
+// # index 3 = end
+// # index 4 = location
+// # index 5 = description
+// # index 6 = color
+// # index 7 = mail??????
+// # index 8 = crate or delete event
+function test(){
+  data = csvToArray(data[2]);
+  Logger.log(data)
+}
 
-- [About](#about)
-- [Getting Started](#getting_started)
-- [Installing](#installing)
-- [Usage](#usage)
-
-## About
-This is a project to automate the process of importing iCloud calendar events into Google Calendar. The project is written in Python and uses the Selenium library to automate the process of logging into iCloud and Submitting data in Google sheet. The project is currently working but there is still a lot of room for improvement.\
-If you have any better ideas or suggestions, please feel free to pull request or contact me.
-
-## Getting Started
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.\
-Requirements:\
-
-Python 3
-
-## Installing
-Download the project and install the requirements using the following command:
-Open the directory in terminal and run the following command:
-
-```git clone https://github.com/fjueic/iCloud-to-Google-Calender.git```
-
-Create a virtual environment and install the requirements using the following command:
-
-```py -m venv venv```
-
-```venv\Scripts\activate.bat```
-
-```pip install -r requirements.txt```
-
-
-Update user id, password and Google form link(discussed below) in the  [cerdential.txt](cerdential.txt) file.
-
-Get the [calendar link](https://yabdab.zendesk.com/hc/en-us/articles/205945926-Find-Google-Calendar-ID) of the calendar you want to import the events to.
-Paste the link in the [Appscript.gs](calendar.txt) at [line 5](AppScript.gs#L5).
-
-Open your [google drive](https://drive.google.com/drive/my-drive) and create a new Google sheet.
-
-Copy the [sheet id](https://docs.meiro.io/books/meiro-integrations/page/where-can-i-find-the-sheet-id-of-google-spreadsheet-file) and paste it in the [Appscript.gs](AppScript.gs) at [line 1](AppScript.gs#L1).
-
-Create a new [Google App Script project](img/Extensions.png) and copy the [Appscript.gs](AppScript.gs) code into the project.
-<img src="img/Extensions.png">
-
-Save the app script project and grant the required permissions.
-Google will warn you that the app script project is not verified. Click on the advanced option and click on the link to continue.
-
-Now, open sheet and create new google form using the following steps:
-<img src="img/Form.png" width="" height="">
-The form should look like this: [Form](https://docs.google.com/forms/d/e/1FAIpQLSe90HPFPm96RrGnEAOaQLp9Tgzo65DoHv0Xcb5qzvbPwkQSAA/viewform?usp=share_link)
-
-**PROGRAM IS CASE SENSITIVE TO THE FORM FIELDS. PLEASE DO NOT CHANGE THE FORM FIELDS.**
+function createEvent() {
+  for (var i = 0; i < data.length; i++) {
+    // index 0 = Name of the Event
+    // index 1 = Start Time of the Event
+    // index 2 = End Time of the Event
+    // index 3 = Location of the Event
+    // index 4 = Description of the Event
+    var Events = calendar.createEvent(data[i][0], new Date(`${data[i][1]} ${data[i][2]}`), new Date(`${data[i][1]} ${data[i][3]}`),
+      { location: data[i][4], description: data[i][5] }).setColor(data[i][6]);
+  }
+}
 
 
-## Usage
-Run the following command to start the program:
-```python main.py```
-If the program runs successfully, you will see the following output in your Google calendar:
-<img src="img/Calendar.png" width="" height="">
+function delete_events(fromDate, toDate) {
+  var events = calendar.getEvents(fromDate, toDate);
+  for (var i = 0; i < events.length; i++) {
+    var ev = events[i];
+    // show event name in log
+    ev.deleteEvent();
+  }
+}
+function temp (){
+  delete_events(new Date("9/1/2021 5:00"),new Date("10/10/2023 5:00"))
+}
+var body = ""
+function mail(action,date,start,end){
+  if(action.trim()=="Create"){
+    var status = "---ADDED"
+  }else{
+    var status = "---REMOVED"
+  }
+  var date = date.split("/")
+  body = body + `${date[1]}/${date[0]}/${date[2]}   ${start}-${end} ${status}
+  Check calender for details https://calendar.google.com/calendar/embed?src=${calendar.getId()}\n`
+}
+function send(){
+  GmailApp.sendEmail(Session.getActiveUser().getEmail(), "Class updated", body);
+}
 
-You may set up a Windows Task Scheduler to run the program at a specific interval.
+function main(){
+// for classes
 
-Refer to the following link for more information: [Windows Task Scheduler](https://www.windowscentral.com/how-create-automated-task-using-task-scheduler-windows-10)
+  if(data[1]=="Classes"){
+    data = csvToArray(data[2]);
+    for(var i=0;i<data.length;i++){
+      // send mail
+      if(data[i][7]=="Mail"){
+
+
+
+
+        if(data[i][8]=="Create"){
+          // create event
+          calendar.createEvent(data[i][0], new Date(`${data[i][1]} ${data[i][2]}`), new Date(`${data[i][1]} ${data[i][3]}`),
+        {
+          location: data[i][4],
+          description: data[i][5]
+        }).setColor(data[i][6]);
+        mail(data[i][8],data[i][1],data[i][2],data[i][3]);
+        }else{
+          // delete event
+          delete_events(new Date(`${data[i][1]} ${data[i][2]}`), new Date(`${data[i][1]} ${data[i][3]}`));
+          mail(data[i][8],data[i][1],data[i][2],data[i][3]);
+        }
+
+
+
+
+      }else{
+        // don't send mail
+        calendar.createEvent(data[i][0], new Date(`${data[i][1]} ${data[i][2]}`), new Date(`${data[i][1]} ${data[i][3]}`),
+        {
+          location: data[i][4],
+          description: data[i][5]
+        }).setColor(data[i][6]);
+    }
+  }
+  // updating attendence
+  }else{
+    data = csvToArray(data[2]);
+    Logger.log(data);
+    for(var i=0;i<data.length;i++){
+      // get the calender event
+      var events = calendar.getEvents(new Date(`${data[i][0]} ${data[i][1]}`),
+      new Date(`${data[i][0]} ${data[i][2]}`));
+
+      try{
+        if(data[i][3]=="P"){
+        // was present
+        events[0].setColor("10");
+        }else{
+        // was absent
+        events[0].setColor("11");
+        }
+      }catch(err){
+        Logger.log("No class found")
+      }
+
+    }
+  }
+  send();
+}
+
