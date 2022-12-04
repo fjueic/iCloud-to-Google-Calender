@@ -15,9 +15,13 @@ If you have any better ideas or suggestions, please feel free to pull request or
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.\
-Requirements:\
+Requirements:
 
 Python 3
+
+Chrome
+
+Selenium driver for chrome
 
 ## Installing
 Download the project and install the requirements using the following command:
