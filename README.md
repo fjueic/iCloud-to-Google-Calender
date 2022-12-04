@@ -37,7 +37,7 @@ Create a virtual environment and install the requirements using the following co
 Update user id, password and Google form link(discussed below) in the  [cerdential.txt](cerdential.txt) file.
 
 Get the [calendar link](https://yabdab.zendesk.com/hc/en-us/articles/205945926-Find-Google-Calendar-ID) of the calendar you want to import the events to.
-Paste the link in the [Appscript.gs](calendar.txt) at [line 5](AppScript.gs#L5).
+Paste the link in the [Appscript.gs](AppScript.gs) at [line 5](AppScript.gs#L5).
 
 Open your [google drive](https://drive.google.com/drive/my-drive) and create a new Google sheet.
 
