@@ -1,5 +1,5 @@
 from iCloudToGCal.selenuimFunctions.iCloud import openiCloud
-
+from iCloudToGCal.chromedriver.installDriver import install_driver
 
 def check_if_ID_pass_is_correct(username, password, app, finishLabel, button1):
 
@@ -21,6 +21,7 @@ def check_if_ID_pass_is_correct(username, password, app, finishLabel, button1):
 
 
 def GUI(s="", a=False):
+    install_driver()
     import time
     import tkinter
 

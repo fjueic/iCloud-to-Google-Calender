@@ -11,7 +11,7 @@ build/
 dist/
 *.egg-info/
 docs/build_*
-
+dist/
 # misc
 .DS_Store
 .env
