@@ -1,3 +1,0 @@
-user id(plain text without any quotes or white spaces)
-password(plain text without any quotes or white spaces)
-google form link(plain text without any quotes or white spaces)
