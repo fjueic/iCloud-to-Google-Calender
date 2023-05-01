@@ -44,5 +44,3 @@ def config():
         f.write("\n".join(d))
         f.truncate()
 
-
-run_script()

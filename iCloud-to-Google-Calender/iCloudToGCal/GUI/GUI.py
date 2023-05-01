@@ -108,4 +108,3 @@ def check_for_data():
             f.seek(0)
             f.write("\n".join(data))
             f.truncate()
-
