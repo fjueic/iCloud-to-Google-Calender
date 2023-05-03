@@ -1,11 +1,11 @@
 from iCloudToGCal.selenuimFunctions.iCloud import openiCloud
 from iCloudToGCal.chromedriver.installDriver import install_driver
-
+from time import sleep
 def check_if_ID_pass_is_correct(username, password, app, finishLabel, button1):
 
     finishLabel.configure(text="Verifying...")
     button1.configure(state="disabled")
-    driver = openiCloud(username, password)
+    driver = openiCloud(username=username,password=password)
     if driver.current_url == "https://gu.icloudems.com/corecampus/index.php":
         driver.quit()
         finishLabel.configure(text="Incorrect Username or Password")
