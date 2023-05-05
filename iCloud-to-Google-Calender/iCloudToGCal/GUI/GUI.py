@@ -1,5 +1,5 @@
 from iCloudToGCal.selenuimFunctions.iCloud import openiCloud
-from iCloudToGCal.chromedriver.installDriver import install_driver
+from iCloudToGCal.chromedriver.installDriver import install_driver,create_desktop_icon
 from time import sleep
 def check_if_ID_pass_is_correct(username, password, app, finishLabel, button1):
 
@@ -87,7 +87,6 @@ def GUI(s="", a=False):
 
     button1 = customtkinter.CTkButton(master=frame, text="Submit", command=submit)
     button1.pack(pady=12, padx=10)
-    from .GUI.create import create_desktop_icon
     button2 = customtkinter.CTkButton(master=frame, text="Add Icon", command=create_desktop_icon)
     button2.pack(pady=12, padx=10)
 

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.poetry]
 name = "iCloudToGCal"
-version = "1.0.2"
+version = "1.0.3"
 description = "Sync iCloud events to Google Calendar"
 authors = ["Rohit <rohitmalik987789@gmail.com>"]
 repository = "https://github.com/fjueic/iCloud-to-Google-Calender.git"
