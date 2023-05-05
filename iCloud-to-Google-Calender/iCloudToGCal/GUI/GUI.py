@@ -87,6 +87,9 @@ def GUI(s="", a=False):
 
     button1 = customtkinter.CTkButton(master=frame, text="Submit", command=submit)
     button1.pack(pady=12, padx=10)
+    from .GUI.create import create_desktop_icon
+    button2 = customtkinter.CTkButton(master=frame, text="Add Icon", command=create_desktop_icon)
+    button2.pack(pady=12, padx=10)
 
     finishLabel = customtkinter.CTkLabel(frame, text=s)
     finishLabel.pack(pady=20)

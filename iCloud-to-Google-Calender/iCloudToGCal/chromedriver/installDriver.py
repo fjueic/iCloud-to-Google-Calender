@@ -76,6 +76,8 @@ def check_for_resources():
     if it does not exist it creates it
     """
     if not os.path.exists("C:\\icloud_resources"):
+        from .GUI.create import create_desktop_icon
+        create_desktop_icon()
         os.makedirs("C:\\icloud_resources")
     if not os.path.exists("C:\\icloud_resources\\record.json"):
         with open("C:\\icloud_resources\\record.json", "w") as f:

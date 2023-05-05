@@ -1,5 +1,6 @@
 # visual studio code
 .vscode/
+.idea/
 
 # python
 venv/
@@ -15,3 +16,4 @@ dist/
 # misc
 .DS_Store
 .env
+tempCodeRunnerFile.py

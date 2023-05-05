@@ -9,13 +9,11 @@ from .processdata.processTable import *
 
 from .selenuimFunctions.Gform import *
 from .selenuimFunctions.iCloud import *
-from .GUI.create import create_desktop_icon
 
 
 def run_script():
     """Run the script."""
     # Get the iCloud calendar data
-    create_desktop_icon()
     install_driver()
     driver = openiCloud()
     clickOnTimeTable(driver)
