@@ -52,26 +52,28 @@ We used some hard coded paths due to which this project will only work for Windo
 
 1. Setup sheet and appscript:-
    - Open [Google Appscript](https://script.google.com/home/start) and create a new project.
-   - Copy the content from [setup.gs](./setup.gs) and run setup function. In case of failure, just try re runnning it.
+   - Copy the content from [setup.gs](./setup.gs) and run setup function(DON'T CLICK DEPLOY). In case of failure, just try re runnning it.
 
    Expected result:-
     ![Screen Shot](img/Setup.gs%20Execution%20log.png)
    - Save the Form URL from the log as you will be prompted to enter it later.
-   - Go to your [Google Drive](https://drive.google.com/) and open iCloud-form, present in iCloud-config folder, and click on responses. You will find a Link to Sheet option on top.
+   - Go to your [Google Drive0](https://drive.google.com/) and open iCloud-form, present in iCloud-config folder, and click on responses([screenshot](img/Rsponses_screenshot.png)). You will find a Link to Sheet option on top.
    - Link the iCloud-data sheet, present in the same folder as iCloud-config.
    - Open iCloud-data sheet, and click on Extensions > Appscript.
    - Paste all the code from [Appscript.gs](./Appscript.gs) to the Appscript and save it.
-   - Set Select event type to "on form submit".
-   - Set Choose which function to run to "main".
+   ![Screen Shot](img/Triggers_screenshot.png)
+   - Set "Select event type" to "on form submit".
+   - Set "Choose which function" to run to "main".
 2. Setup on your PC.
    - Install using pip:-
      ```sh
      pip install icloudtogcal && icloud_run_script
      ```
    - Wait for dependencies to be installed, and then you will be prompted to enter the ID, password and form URL. Enter the URL you saved earlier.
-
+   - If the script fails, wait for environment variable to take effect or restart your PC and then run the script again.
+   
 ## Usage
-
+1. Running the script:-
    -  Entry point will be icloud_run_script. You can run it using:-
    ```sh
    icloud_run_script
@@ -82,6 +84,14 @@ We used some hard coded paths due to which this project will only work for Windo
     icloud_config
    ```
    - You can find the executable for updaing ID, password or form URL in desktop folder.
+   
+2. Using the script:-
+
+   The library provides two main functions:-
+   
+   ``run_script()`` ``config()``
+   
+   It does the same thing as ``icloud_run_script`` and ``icloud_config`` respectively.
 
 ## Roadmap
 
